@@ -17,7 +17,6 @@ module.exports = function (assemble) {
     assemble.log.debug('\t[params]:', params);
 
     if (assemble.options.blog) {
-      console.log('blog options', assemble.options.blog);
 
       // make sure collections options are there
       assemble.options.collections = assemble.options.collections || [];
@@ -51,9 +50,6 @@ module.exports = function (assemble) {
         var year = segments[segments.length - 3];
         var month = segments[segments.length - 2] - 1;
         var basename = file.basename(filepath);
-
-        console.log('segments', segments);
-
         var date = new Date(year, month);
 
         post.metadata.archives = post.metadata.archives || [];
@@ -61,8 +57,6 @@ module.exports = function (assemble) {
 
         assemble.pages.push(post);
       });
-
-      console.log('posts', posts);
     }
 
     done();
