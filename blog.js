@@ -9,53 +9,49 @@ var file = require('fs-utils');
 
 module.exports = function (assemble) {
 
-  var events = assemble.config.plugins.events;
+  var events = assemble.utils.plugins.events;
 
   // using the specified folders, load posts as pages
   var loadPosts = function (params, done) {
     assemble.log.debug('\t[plugin]: ', 'assemble-blog-load-posts plugin', params.event);
     assemble.log.debug('\t[params]:', params);
 
-    if (assemble.options.blog) {
+    if (assemble.config.blog) {
 
       // make sure collections options are there
-      assemble.options.collections = assemble.options.collections || [];
+      assemble.config.collections = assemble.config.collections || [];
       var archivesCollection = null;
-      for (var i = 0; i < assemble.options.collections.length; i++) {
-        if (assemble.options.collections[i].name && assemble.options.collections[i].name === 'archive') {
+      for (var i = 0; i < assemble.config.collections.length; i++) {
+        if (assemble.config.collections[i].name && assemble.config.collections[i].name === 'archive') {
           archivesCollection = assemble.collections[i];
         }
       }
 
       if (archivesCollection === null) {
-        archivesCollection = {
-          name: 'archive',
-          plural: 'archives'
-        };
-        archivesCollection.index = assemble.options.blog.index;
-        archivesCollection['related_pages'] = assemble.options.blog['related_pages'];
-        assemble.options.collections.push(archivesCollection);
+        archivesCollection = assemble.config.blog.archives;
+        assemble.config.collections.push(archivesCollection);
       }
 
-      assemble.pages = assemble.pages || [];
+      assemble.config.pages = assemble.config.pages || [];
 
       // load posts
-      var posts = file.expand(assemble.options.blog.posts);
+      var posts = file.expand(assemble.config.blog.posts);
 
       posts.forEach(function (filepath) {
-        var post = assemble.models.Component.readFile(filepath, 'component');
+        var post = assemble.utils.component.fromFile(filepath, 'component');
+        post.dest = post.data.dest = assemble.config.blog.dest + file.basename(filepath) + '.html';
 
         // split up the path to generate archive collection tags
         var segments = filepath.split('/');
         var year = segments[segments.length - 3];
-        var month = segments[segments.length - 2] - 1;
+        var month = segments[segments.length - 2];
         var basename = file.basename(filepath);
-        var date = new Date(year, month);
+        var key = year + '/' + month;
 
-        post.metadata.archives = post.metadata.archives || [];
-        post.metadata.archives.push(date);
+        post.data.archives = post.data.archives || [];
+        post.data.archives.push(key);
 
-        assemble.pages.push(post);
+        assemble.config.pages.push(post);
       });
     }
 

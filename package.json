@@ -39,7 +39,9 @@
   "devDependencies": {
     "verb": "~0.2.0",
     "chai": "^1.9.1",
-    "assemble": "git://github.com/assemble/assemble#v0.5.0"
+    "assemble": "git://github.com/assemble/assemble#v0.5.0",
+    "lodash": "^2.4.1",
+    "fs-utils": "^0.4.1"
   },
   "dependencies": {
     "fs-utils": "^0.4.0"
