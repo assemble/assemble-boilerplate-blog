@@ -25,7 +25,7 @@ describe('assemble-middleware-blog', function () {
         archives: {
           name: 'archive',
           plural: 'archives',
-          'related_pages': {
+          related_pages: {
             template: 'test/fixtures/layouts/posts.hbs',
             dest: '<%= blog.dest %>',
             pagination: {
@@ -34,7 +34,7 @@ describe('assemble-middleware-blog', function () {
               sortby: 'date'
             },
             permalinks: {
-              structure: ':YYYY/:MM/:num/index.html'
+              structure: ':archive/:num/index.html'
             }
           }
         }

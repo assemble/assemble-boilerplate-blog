@@ -36,6 +36,7 @@ module.exports = function (assemble) {
 
       // load posts
       var posts = file.expand(assemble.config.blog.posts);
+      var parser= strings.parser(':year/:month/:day-:basename.:ext');
 
       posts.forEach(function (filepath) {
         var post = assemble.utils.component.fromFile(filepath, 'component');
@@ -48,8 +49,24 @@ module.exports = function (assemble) {
         var basename = file.basename(filepath);
         var key = year + '/' + month;
 
+        var ctx = parser.parse(filepath);
+        var yearStucture = strings(':YYYY');
+        var monthStructure = strings(':YYYY/:MM');
+        var dayStructure = strings(':YYYY/:MM/:DD');
+
+        var date = post.data.date || ctx.date;
+        // create required collections
+        // year archive
+        post.data.archiveYear = [yearStucture.use(strings.date(date)).run()];
+        // month archive
+        post.data.archiveMonth = [monthStucture.use(strings.date(date)).run()];
+        // day archive
+        post.data.archiveDay = [dayStucture.use(strings.date(date)).run()];
+
         post.data.archives = post.data.archives || [];
         post.data.archives.push(key);
+
+        archives:
 
         assemble.config.pages.push(post);
       });

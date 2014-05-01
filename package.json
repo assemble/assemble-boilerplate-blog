@@ -1,23 +1,23 @@
 {
-  "name": "assemble-middleware-blog",
+  "name": "assemble-boilerplate-blog",
   "description": "Assemble plugin to assist with generating blog pages for posts and archive lists.",
   "version": "0.1.0",
-  "homepage": "https://github.com/assemble/assemble-middleware-blog",
+  "homepage": "https://github.com/assemble/assemble-boilerplate-blog",
   "author": {
     "name": "Brian Woodward",
     "url": "https://github.com/doowb"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/assemble/assemble-middleware-blog.git"
+    "url": "git://github.com/assemble/assemble-boilerplate-blog.git"
   },
   "bugs": {
-    "url": "https://github.com/assemble/assemble-middleware-blog/issues"
+    "url": "https://github.com/assemble/assemble-boilerplate-blog/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/assemble/assemble-middleware-blog/blob/master/LICENSE-MIT"
+      "url": "https://github.com/assemble/assemble-boilerplate-blog/blob/master/LICENSE-MIT"
     }
   ],
   "keywords": [
