@@ -1,9 +1,6 @@
 # assemble-boilerplate-blog [![NPM version](https://badge.fury.io/js/assemble-boilerplate-blog.png)](http://badge.fury.io/js/assemble-boilerplate-blog)
 
-> Assemble plugin to assist with generating blog pages for posts and archive lists.
-
-## What is this?
-In a nutshell, this boilerplate has the essential middleware, helpers, templates and (opinionated) configuration necessary to easily create a blog with Assemble.
+> Assemble boilerplate with the essential middleware, helpers, templates and (opinionated) configuration necessary to easily create a blog with Assemble.
 
 ## TODO
 Things that need to be accomplished:

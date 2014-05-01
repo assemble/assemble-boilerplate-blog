@@ -1,6 +1,6 @@
 {
   "name": "assemble-boilerplate-blog",
-  "description": "Assemble plugin to assist with generating blog pages for posts and archive lists.",
+  "description": "Assemble boilerplate with the essential middleware, helpers, templates and (opinionated) configuration necessary to easily create a blog with Assemble.",
   "version": "0.1.0",
   "homepage": "https://github.com/assemble/assemble-boilerplate-blog",
   "author": {
