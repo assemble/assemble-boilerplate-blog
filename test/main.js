@@ -17,7 +17,7 @@ describe('assemble-middleware-blog', function () {
   it('should load posts as pages', function (done) {
     var options = {
       layout: 'test/fixtures/layouts/post.hbs',
-      plugins: ['blog.js'],
+      middleware: ['templates/_middleware/blog.js'],
       blog: {
         posts: ['test/fixtures/posts/**/*.md'],
         dest: 'test/actual/blog/',

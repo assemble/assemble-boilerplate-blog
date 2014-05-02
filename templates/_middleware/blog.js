@@ -6,10 +6,14 @@
  */
 
 var file = require('fs-utils');
+var strings = require('strings');
+var Strings = require('strings/lib/strings');
 
+console.log('blah');
 module.exports = function (assemble) {
+  console.log('loading blog plugin');
 
-  var events = assemble.utils.plugins.events;
+  var events = assemble.utils.middleware.events;
 
   // using the specified folders, load posts as pages
   var loadPosts = function (params, done) {
@@ -36,37 +40,43 @@ module.exports = function (assemble) {
 
       // load posts
       var posts = file.expand(assemble.config.blog.posts);
-      var parser= strings.parser(':year/:month/:day-:basename.:ext');
+      //var parser = strings.parser(':year/:month/:day-:basename.:ext');
+      var parser = {
+        parse: function (filepath) {
+          // {YYYY}/{MM}/{DD}-{basename}{ext}
+          var re = /(\d{4})\/(\d{2})\/(\d{2})-(.*)(\..*)$/;
+          var matches = filepath.match(re);
+          var results = {};
+          if (matches) {
+            results.year = matches[1];
+            results.month = matches[2];
+            results.day = matches[3];
+            results.basename = matches[4];
+            results.ext = matches[5];
+            results.date = new Date(results.year, results.month, results.day);
+          }
+          return results;
+        }
+      };
 
       posts.forEach(function (filepath) {
         var post = assemble.utils.component.fromFile(filepath, 'component');
         post.dest = post.data.dest = assemble.config.blog.dest + file.basename(filepath) + '.html';
 
-        // split up the path to generate archive collection tags
-        var segments = filepath.split('/');
-        var year = segments[segments.length - 3];
-        var month = segments[segments.length - 2];
-        var basename = file.basename(filepath);
-        var key = year + '/' + month;
-
         var ctx = parser.parse(filepath);
-        var yearStucture = strings(':YYYY');
-        var monthStructure = strings(':YYYY/:MM');
-        var dayStructure = strings(':YYYY/:MM/:DD');
+        var yearStructure = new Strings({structure: ':YYYY'});
+        var monthStructure = new Strings({structure: ':YYYY/:MM'});
+        var dayStructure = new Strings({structure: ':YYYY/:MM/:DD'});
 
         var date = post.data.date || ctx.date;
-        // create required collections
-        // year archive
-        post.data.archiveYear = [yearStucture.use(strings.date(date)).run()];
-        // month archive
-        post.data.archiveMonth = [monthStucture.use(strings.date(date)).run()];
-        // day archive
-        post.data.archiveDay = [dayStucture.use(strings.date(date)).run()];
-
+        // add the required tags to the archive collection
         post.data.archives = post.data.archives || [];
-        post.data.archives.push(key);
-
-        archives:
+        // year archive
+        post.data.archives.push(yearStructure.use(strings.dates(date)).run());
+        // month archive
+        post.data.archives.push(monthStructure.use(strings.dates(date)).run());
+        // day archive
+        post.data.archives.push(dayStructure.use(strings.dates(date)).run());
 
         assemble.config.pages.push(post);
       });
@@ -83,7 +93,7 @@ module.exports = function (assemble) {
     ]
   };
 
-  var plugins = {};
-  plugins[loadPosts.options.name] = loadPosts;
-  return plugins;
+  var middleware = {};
+  middleware[loadPosts.options.name] = loadPosts;
+  return middleware;
 };
