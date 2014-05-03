@@ -61,14 +61,16 @@ module.exports = function (assemble) {
 
       posts.forEach(function (filepath) {
         var post = assemble.utils.component.fromFile(filepath, 'component');
-        post.dest = post.data.dest = assemble.config.blog.dest + file.basename(filepath) + '.html';
+        post.src = post.data.src = filepath;
+        post.dest = assemble.utils.utils.generateDestination(post.src, assemble.config.blog.dest, false, assemble.config);
 
         var ctx = parser.parse(filepath);
         var yearStructure = new Strings({structure: ':YYYY'});
-        var monthStructure = new Strings({structure: ':YYYY/:MM'});
-        var dayStructure = new Strings({structure: ':YYYY/:MM/:DD'});
+        var monthStructure = new Strings({structure: ':YYYY-:MM'});
+        var dayStructure = new Strings({structure: ':YYYY-:MM-:DD'});
 
         var date = post.data.date || ctx.date;
+        post.data.date = post.data.date || date;
         // add the required tags to the archive collection
         post.data.archives = post.data.archives || [];
         // year archive
@@ -77,6 +79,12 @@ module.exports = function (assemble) {
         post.data.archives.push(monthStructure.use(strings.dates(date)).run());
         // day archive
         post.data.archives.push(dayStructure.use(strings.dates(date)).run());
+
+        if (!post.data.permalinks && assemble.config.blog.structure) {
+          post.data.permalinks = {
+            structure: assemble.config.blog.structure
+          };
+        }
 
         assemble.config.pages.push(post);
       });

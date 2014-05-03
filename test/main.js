@@ -17,7 +17,12 @@ describe('assemble-middleware-blog', function () {
   it('should load posts as pages', function (done) {
     var options = {
       layout: 'test/fixtures/layouts/post.hbs',
-      middleware: ['templates/_middleware/blog.js'],
+      middleware: [
+        'assemble-middleware-permalinks',
+        'templates/_middleware/blog.js'
+      ],
+      flatten: false,
+      assets: 'test/actual/assets',
       blog: {
         posts: ['test/fixtures/posts/**/*.md'],
         dest: 'test/actual/blog/',
@@ -27,14 +32,26 @@ describe('assemble-middleware-blog', function () {
           plural: 'archives',
           related_pages: {
             template: 'test/fixtures/layouts/posts.hbs',
-            dest: '<%= blog.dest %>',
+            dest: '<%= blog.dest %>archives/',
             pagination: {
-              prop: ':num',
+              prop: 'num',
               limit: 3,
               sortby: 'date'
             },
             permalinks: {
-              structure: ':archive/:num/index.html'
+              structure: ':archive/:numindex.html',
+              replacements: [
+                {
+                  pattern: ':num',
+                  replacement: function () {
+                    console.log('num', this.num);
+                    if (this.num === 1) {
+                      return '';
+                    }
+                    return this.num + '/';
+                  }
+                }
+              ]
             }
           }
         }
@@ -50,6 +67,7 @@ describe('assemble-middleware-blog', function () {
       pageKeys.forEach(function (pageKey) {
         var page = results.pages[pageKey];
         console.log('dest', page.dest);
+        console.log('data', page.data.permalinks);
         if (page.dest && page.dest !== '.') {
           file.writeFileSync(page.dest, page.content);
         }

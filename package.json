@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "fs-utils": "^0.4.0",
-    "strings": "^0.2.1"
+    "strings": "^0.2.1",
+    "assemble-middleware-permalinks": "^0.5.0"
   }
 }
