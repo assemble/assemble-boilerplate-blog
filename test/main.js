@@ -67,10 +67,7 @@ describe('assemble-middleware-blog', function () {
       var pageKeys = _.keys(results.pages);
       pageKeys.forEach(function (pageKey) {
         var page = results.pages[pageKey];
-        console.log('Writing out ["' + page.dest + '"]');
-        if (page.dest && page.dest !== '.') {
-          file.writeFileSync(page.dest, page.content);
-        }
+        //console.log('Writing out ["' + page.dest + '"]');
       });
       done();
     });
