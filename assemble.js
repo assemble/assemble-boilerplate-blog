@@ -13,11 +13,13 @@ var file = require('fs-utils');
 var assemble = require('assemble');
 var normalize = require('normalize-config');
 
-
+// load middleware from the dependencies
 var pkg = require('package.json');
 var deps = _.keys(pkg.dependencies).concat(_.keys(pkg.devDependencies));
 var middleware = require('matched')(deps, ['assemble-middleware-*']);
 
+// find the pages we want to build and turn
+// them into assemble components
 var pages = [];
 var files = file.expandMapping(['**/*.hbs'], {
   expand: true,
@@ -34,8 +36,9 @@ files.forEach(function (fp) {
   });
 });
 
+// setup the configuration options to pass to assemble
 var options = {
-  layout: 'default',
+  layout: 'post',
   layoutext: '.hbs',
   layoutdir: 'templates/layouts/',
   middleware: middleware.concat(['templates/_middleware/blog.js']),
@@ -44,7 +47,7 @@ var options = {
   blog: {
     posts: ['**/*.md'],
     dest: '_gh_pages/blog/',
-    cwd: 'templates/posts',
+    cwd: 'templates/posts/',
     expand: true,
     flatten: false,
     structure: ':basename/index.html',
@@ -52,7 +55,7 @@ var options = {
       name: 'archive',
       plural: 'archives',
       related_pages: {
-        template: 'templates/layouts/posts.hbs',
+        template: 'templates/layouts/list.hbs',
         dest: '<%= blog.dest %>archives/',
         pagination: {
           prop: 'num',
@@ -87,5 +90,8 @@ assemble(options).build(function(err, results) {
   pageKeys.forEach(function (pageKey) {
     var page = results.pages[pageKey];
     console.log('Writing out ["' + page.dest + '"]');
+    if (page.dest && page.dest !== '.') {
+      file.writeFileSync(page.dest, page.content);
+    }
   });
 });

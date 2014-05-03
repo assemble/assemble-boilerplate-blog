@@ -1,7 +1,7 @@
 <ul>
-  {{#each posts}}
+  {{#each related-pages}}
     <li>
-      <a href="{{ url }}">{{ title }}</a>
+      <a href="{{ data.dest}}">{{ data.title }}</a>
     </li>
-  {{/posts}}
+  {{/each}}
 </ul>
