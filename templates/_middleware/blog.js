@@ -39,7 +39,7 @@ module.exports = function (assemble) {
       assemble.config.pages = assemble.config.pages || [];
 
       // load posts
-      var posts = file.expand(assemble.config.blog.posts);
+      var posts = file.expandMapping(assemble.config.blog.posts, assemble.config.blog);
       //var parser = strings.parser(':year/:month/:day-:basename.:ext');
       var parser = {
         parse: function (filepath) {
@@ -59,34 +59,36 @@ module.exports = function (assemble) {
         }
       };
 
-      posts.forEach(function (filepath) {
-        var post = assemble.utils.component.fromFile(filepath, 'component');
-        post.src = post.data.src = filepath;
-        post.dest = assemble.utils.utils.generateDestination(post.src, assemble.config.blog.dest, false, assemble.config);
+      posts.forEach(function (fp) {
+        fp.src.forEach(function (filepath) {
+          var post = assemble.utils.component.fromFile(filepath, 'component');
+          post.src = post.data.src = filepath;
+          post.dest = assemble.utils.utils.generateDestination(post.src, (assemble.config.blog.dest + fp.dest), false, assemble.config);
 
-        var ctx = parser.parse(filepath);
-        var yearStructure = new Strings({structure: ':YYYY'});
-        var monthStructure = new Strings({structure: ':YYYY-:MM'});
-        var dayStructure = new Strings({structure: ':YYYY-:MM-:DD'});
+          var ctx = parser.parse(filepath);
+          var yearStructure = new Strings({structure: ':YYYY'});
+          var monthStructure = new Strings({structure: ':YYYY-:MM'});
+          var dayStructure = new Strings({structure: ':YYYY-:MM-:DD'});
 
-        var date = post.data.date || ctx.date;
-        post.data.date = post.data.date || date;
-        // add the required tags to the archive collection
-        post.data.archives = post.data.archives || [];
-        // year archive
-        post.data.archives.push(yearStructure.use(strings.dates(date)).run());
-        // month archive
-        post.data.archives.push(monthStructure.use(strings.dates(date)).run());
-        // day archive
-        post.data.archives.push(dayStructure.use(strings.dates(date)).run());
+          var date = post.data.date || ctx.date;
+          post.data.date = post.data.date || date;
+          // add the required tags to the archive collection
+          post.data.archives = post.data.archives || [];
+          // year archive
+          post.data.archives.push(yearStructure.use(strings.dates(date)).run());
+          // month archive
+          post.data.archives.push(monthStructure.use(strings.dates(date)).run());
+          // day archive
+          post.data.archives.push(dayStructure.use(strings.dates(date)).run());
 
-        if (!post.data.permalinks && assemble.config.blog.structure) {
-          post.data.permalinks = {
-            structure: assemble.config.blog.structure
-          };
-        }
+          if (!post.data.permalinks && assemble.config.blog.structure) {
+            post.data.permalinks = {
+              structure: assemble.config.blog.structure
+            };
+          }
 
-        assemble.config.pages.push(post);
+          assemble.config.pages.push(post);
+        });
       });
     }
 

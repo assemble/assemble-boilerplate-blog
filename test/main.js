@@ -15,17 +15,19 @@ var assemble = require('assemble');
 describe('assemble-middleware-blog', function () {
 
   it('should load posts as pages', function (done) {
+    var pkg = require('../package.json');
+    var deps = _.keys(pkg.dependencies).concat(_.keys(pkg.devDependencies));
+    var middleware = require('matched')(deps, ['assemble-middleware-*']);
     var options = {
       layout: 'test/fixtures/layouts/post.hbs',
-      middleware: [
-        'assemble-middleware-permalinks',
-        'templates/_middleware/blog.js'
-      ],
-      flatten: false,
+      middleware: middleware.concat(['templates/_middleware/blog.js']),
       assets: 'test/actual/assets',
       blog: {
-        posts: ['test/fixtures/posts/**/*.md'],
+        posts: ['**/*.md'],
         dest: 'test/actual/blog/',
+        cwd: 'test/fixtures/posts',
+        expand: true,
+        flatten: false,
         structure: ':basename/index.html',
         archives: {
           name: 'archive',
@@ -44,7 +46,6 @@ describe('assemble-middleware-blog', function () {
                 {
                   pattern: ':num',
                   replacement: function () {
-                    console.log('num', this.num);
                     if (this.num === 1) {
                       return '';
                     }
@@ -66,8 +67,7 @@ describe('assemble-middleware-blog', function () {
       var pageKeys = _.keys(results.pages);
       pageKeys.forEach(function (pageKey) {
         var page = results.pages[pageKey];
-        console.log('dest', page.dest);
-        console.log('data', page.data.permalinks);
+        console.log('Writing out ["' + page.dest + '"]');
         if (page.dest && page.dest !== '.') {
           file.writeFileSync(page.dest, page.content);
         }
