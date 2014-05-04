@@ -25,7 +25,8 @@ var files = file.expandMapping(['**/*.hbs'], {
   expand: true,
   cwd: 'templates/pages/',
   flatten: false,
-  dest: '_gh_pages'
+  dest: '_gh_pages',
+  ext: '.html'
 });
 
 files.forEach(function (fp) {
@@ -46,6 +47,12 @@ var options = {
       related_pages: {
         permalinks: {
           replacements: [
+            {
+              pattern: ':archive',
+              replacement: function () {
+                return this.archive.replace(/-/g, '/');
+              }
+            },
             {
               pattern: ':num',
               replacement: function () {

@@ -2,6 +2,11 @@ layout: "post"
 layoutext: ".hbs"
 layoutdir: "templates/layouts/"
 assets: "_gh_pages/assets"
+ext: ".html"
+partials:
+  - "templates/includes/**/*.hbs"
+helpers:
+  - "templates/_helpers/**/*.js"
 blog:
   posts:
     - "**/*.md"
@@ -18,7 +23,7 @@ blog:
       dest: "<%= blog.dest %>archives/"
       pagination:
         prop: "num"
-        limit: 5
+        limit: 2
         sortby: "date"
       permalinks:
         structure: ":archive/:numindex.html"
