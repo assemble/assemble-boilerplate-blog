@@ -8,19 +8,24 @@
 var file = require('fs-utils');
 var strings = require('strings');
 var Strings = require('strings/lib/strings');
+var utils = require('./lib/utils');
 
-console.log('blah');
 module.exports = function (assemble) {
-  console.log('loading blog plugin');
-
   var events = assemble.utils.middleware.events;
 
   // using the specified folders, load posts as pages
-  var loadPosts = function (params, done) {
-    assemble.log.debug('\t[plugin]: ', 'assemble-blog-load-posts plugin', params.event);
+  var middleware = function (params, done) {
+    assemble.log.debug('\t[plugin]: ', 'assemble-middleware-archives', params.event);
     assemble.log.debug('\t[params]:', params);
 
     if (assemble.config.blog) {
+      var blogOptions = assemble.config.blog;
+      var postsPatterns = blogOptions.posts;
+
+
+      /**
+       * Collections
+       */
 
       // make sure collections options are there
       assemble.config.collections = assemble.config.collections || [];
@@ -32,38 +37,29 @@ module.exports = function (assemble) {
       }
 
       if (archivesCollection === null) {
-        archivesCollection = assemble.config.blog.archives;
+        archivesCollection = blogOptions.archives;
         assemble.config.collections.push(archivesCollection);
       }
-
       assemble.config.pages = assemble.config.pages || [];
 
-      // load posts
-      var posts = file.expandMapping(assemble.config.blog.posts, assemble.config.blog);
+
+      /**
+       * Posts
+       */
+
+      // Expand post filepaths (not really loading them)
+      var posts = file.expandMapping(postsPatterns, blogOptions);
+
       //var parser = strings.parser(':year/:month/:day-:basename.:ext');
       var parser = {
-        parse: function (filepath) {
-          // {YYYY}/{MM}/{DD}-{basename}{ext}
-          var re = /(\d{4})\/(\d{2})\/(\d{2})-(.*)(\..*)$/;
-          var matches = filepath.match(re);
-          var results = {};
-          if (matches) {
-            results.year = matches[1];
-            results.month = matches[2];
-            results.day = matches[3];
-            results.basename = matches[4];
-            results.ext = matches[5];
-            results.date = new Date(results.year, results.month, results.day);
-          }
-          return results;
-        }
+        parse: utils.parsePostPaths // Say that five times fast
       };
 
       posts.forEach(function (fp) {
         fp.src.forEach(function (filepath) {
           var post = assemble.utils.component.fromFile(filepath, 'component');
           post.src = post.data.src = filepath;
-          post.dest = assemble.utils.utils.generateDestination(post.src, (assemble.config.blog.dest + fp.dest), false, assemble.config);
+          post.dest = utils.resolveDest(post.src, (blogOptions.dest + fp.dest), false, assemble.config);
 
           var ctx = parser.parse(filepath);
           var yearStructure = new Strings({structure: ':YYYY'});
@@ -81,7 +77,7 @@ module.exports = function (assemble) {
           // day archive
           post.data.archives.push(dayStructure.use(strings.dates(date)).run());
 
-          if (!post.data.permalinks && assemble.config.blog.structure) {
+          if (!post.data.permalinks && blogOptions.structure) {
             post.data.permalinks = {
               structure: assemble.config.blog.structure
             };
@@ -95,15 +91,9 @@ module.exports = function (assemble) {
     done();
   };
 
-  loadPosts.options = {
-    name: 'assemble-blog-load-posts',
-    description: '',
-    events: [
-      events.assembleBeforeConfiguration
-    ]
-  };
 
-  var middleware = {};
-  middleware[loadPosts.options.name] = loadPosts;
-  return middleware;
+  middleware.event = 'assemble:before:configuration';
+  return {
+    'assemble-blog-load-posts': middleware
+  };
 };

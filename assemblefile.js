@@ -7,43 +7,52 @@
  */
 
 var path = require('path');
-
-var _ = require('lodash');
-var file = require('fs-utils');
 var assemble = require('assemble');
+var file = require('fs-utils');
+var _ = require('lodash');
 var normalize = require('normalize-config');
 
 // load middleware from the dependencies
-var pkg = require('package.json');
-var deps = _.keys(pkg.dependencies).concat(_.keys(pkg.devDependencies));
-var middleware = require('matched')(deps, ['assemble-middleware-*']);
+var loadExtensions = require('./templates/_middleware/lib/load');
+var middleware = loadExtensions('assemble-middleware-*');
+var helpers = loadExtensions('handlebars-helper-*');
 
 // find the pages we want to build and turn
 // them into assemble components
 var pages = [];
 var files = file.expandMapping(['**/*.hbs'], {
-  expand: true,
-  cwd: 'templates/pages/',
   flatten: false,
+  expand: true,
+  ext: '.html',
+  cwd: 'templates/pages/',
   dest: '_gh_pages'
 });
 
 files.forEach(function (fp) {
   fp.src.forEach(function (filepath) {
     var page = assemble.utils.component.fromFile(filepath, 'component');
+    console.log(fp.dest);
     page.dest = page.data.dest = '_gh_pages/' + fp.dest;
     pages.push(page);
   });
 });
 
+
+
 // setup the configuration options to pass to assemble
 var options = {
+  assets: '_gh_pages/assets',
+
+  // Layouts
   layout: 'post',
   layoutext: '.hbs',
   layoutdir: 'templates/layouts/',
+
+  // Extensions
   middleware: middleware.concat(['templates/_middleware/blog.js']),
-  assets: '_gh_pages/assets',
   pages: pages,
+
+
   blog: {
     posts: ['**/*.md'],
     dest: '_gh_pages/blog/',
@@ -86,10 +95,10 @@ assemble(options).build(function(err, results) {
     console.log('Error', err);
     return done(err);
   }
-  var pageKeys = _.keys(results.pages);
-  pageKeys.forEach(function (pageKey) {
+
+  _.keys(results.pages).forEach(function (pageKey) {
     var page = results.pages[pageKey];
-    console.log('Writing out ["' + page.dest + '"]');
+    console.log('  [writing]', page.dest);
     if (page.dest && page.dest !== '.') {
       file.writeFileSync(page.dest, page.content);
     }
