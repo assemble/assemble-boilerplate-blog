@@ -9,9 +9,7 @@ var file = require('fs-utils');
 var strings = require('strings');
 var Strings = require('strings/lib/strings');
 
-console.log('blah');
 module.exports = function (assemble) {
-  console.log('loading blog plugin');
 
   var events = assemble.utils.middleware.events;
 
