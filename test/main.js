@@ -19,29 +19,12 @@ describe('assemble-middleware-blog', function () {
     var deps = _.keys(pkg.dependencies).concat(_.keys(pkg.devDependencies));
     var middleware = require('matched')(deps, ['assemble-middleware-*']);
     var options = {
-      layout: 'test/fixtures/layouts/post.hbs',
+      assemblerc: 'test/fixtures/.assemblerc.yml',
       middleware: middleware.concat(['templates/_middleware/blog.js']),
-      assets: 'test/actual/assets',
       blog: {
-        posts: ['**/*.md'],
-        dest: 'test/actual/blog/',
-        cwd: 'test/fixtures/posts',
-        expand: true,
-        flatten: false,
-        structure: ':basename/index.html',
         archives: {
-          name: 'archive',
-          plural: 'archives',
           related_pages: {
-            template: 'test/fixtures/layouts/posts.hbs',
-            dest: '<%= blog.dest %>archives/',
-            pagination: {
-              prop: 'num',
-              limit: 3,
-              sortby: 'date'
-            },
             permalinks: {
-              structure: ':archive/:numindex.html',
               replacements: [
                 {
                   pattern: ':num',
@@ -49,7 +32,7 @@ describe('assemble-middleware-blog', function () {
                     if (this.num === 1) {
                       return '';
                     }
-                    return this.num + '/';
+                    return (this.num + '/');
                   }
                 }
               ]

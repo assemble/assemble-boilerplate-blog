@@ -1,12 +1,10 @@
-layout: "post"
-layoutext: ".hbs"
-layoutdir: "templates/layouts/"
-assets: "_gh_pages/assets"
+layout: "test/fixtures/layouts/post.hbs"
+assets: "test/actual/assets"
 blog:
   posts:
     - "**/*.md"
-  dest: "_gh_pages/blog/"
-  cwd: "templates/posts/"
+  dest: "test/actual/blog/"
+  cwd: "test/fixtures/posts"
   expand: true
   flatten: false
   structure: ":basename/index.html"
@@ -14,11 +12,11 @@ blog:
     name: "archive"
     plural: "archives"
     related_pages:
-      template: "templates/layouts/list.hbs"
+      template: "test/fixtures/layouts/posts.hbs"
       dest: "<%= blog.dest %>archives/"
       pagination:
         prop: "num"
-        limit: 5
+        limit: 3
         sortby: "date"
       permalinks:
         structure: ":archive/:numindex.html"
