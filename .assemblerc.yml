@@ -1,14 +1,14 @@
 layout: "post"
 layoutext: ".hbs"
 layoutdir: "templates/layouts/"
-assets: "_gh_pages/assets"
+assets: "assets"
 ext: ".html"
 partials:
   - "templates/includes/**/*.hbs"
 blog:
   posts:
     - "**/*.md"
-  dest: "_gh_pages/blog/"
+  dest: "blog/"
   cwd: "templates/posts/"
   expand: true
   flatten: false
