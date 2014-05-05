@@ -51,7 +51,7 @@ module.exports = function (assemble) {
             results.day = matches[3];
             results.basename = matches[4];
             results.ext = matches[5];
-            results.date = new Date(results.year, results.month, results.day);
+            results.date = new Date(results.year, (results.month - 1), results.day);
           }
           return results;
         }

@@ -17,6 +17,7 @@ var normalize = require('normalize-config');
 var pkg = require('package.json');
 var deps = _.keys(pkg.dependencies).concat(_.keys(pkg.devDependencies));
 var middleware = require('matched')(deps, ['assemble-middleware-*']);
+var helpers = require('matched')(deps, ['handlebars-helper-*']);
 
 // find the pages we want to build and turn
 // them into assemble components
@@ -41,6 +42,7 @@ files.forEach(function (fp) {
 var options = {
   assemblerc: '.assemblerc.yml',
   middleware: middleware.concat(['templates/_middleware/blog.js']),
+  helpers: helpers.concat(['templates/_helpers/**/*.js']),
   pages: pages,
   blog: {
     archives: {
