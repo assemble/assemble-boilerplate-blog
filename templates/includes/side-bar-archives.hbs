@@ -2,6 +2,6 @@
 <h4>Archives</h4>
 <ol class="list-unstyled">
   {{#each collections.archives}}
-  <li><a href="{{relative ../dest this.pagination.first.dest}}">{{archive}}</a></li>
+  <li><a href="{{relative ../dest this.pagination.first.dest}}">{{moment (archive-normalize archive) format=(archive-format archive)}}</a></li>
   {{/each}}
 </ol>

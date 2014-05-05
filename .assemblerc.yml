@@ -5,8 +5,6 @@ assets: "_gh_pages/assets"
 ext: ".html"
 partials:
   - "templates/includes/**/*.hbs"
-helpers:
-  - "templates/_helpers/**/*.js"
 blog:
   posts:
     - "**/*.md"
