@@ -39,6 +39,7 @@ module.exports = function (assemble) {
       // load posts
       var posts = file.expandMapping(assemble.config.blog.posts, assemble.config.blog);
       //var parser = strings.parser(':year/:month/:day-:basename.:ext');
+
       var parser = {
         parse: function (filepath) {
           // {YYYY}/{MM}/{DD}-{basename}{ext}
@@ -70,6 +71,7 @@ module.exports = function (assemble) {
 
           var date = post.data.date || ctx.date;
           post.data.date = post.data.date || date;
+
           // add the required tags to the archive collection
           post.data.archives = post.data.archives || [];
           // year archive

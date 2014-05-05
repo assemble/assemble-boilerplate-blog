@@ -37,11 +37,11 @@
     "test": "mocha -R spec"
   },
   "devDependencies": {
-    "verb": "~0.2.0",
-    "chai": "^1.9.1",
     "assemble": "git://github.com/assemble/assemble#v0.5.0",
+    "chai": "^1.9.1",
+    "gulp-assemble": "git://github.com/assemble/gulp-assemble",
+    "gulp-verb": "git://github.com/assemble/gulp-verb",
     "lodash": "^2.4.1",
-    "fs-utils": "^0.4.1",
     "matched": "^0.1.1"
   },
   "dependencies": {

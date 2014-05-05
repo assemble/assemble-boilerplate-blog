@@ -14,7 +14,7 @@ var assemble = require('assemble');
 var normalize = require('normalize-config');
 
 // load middleware from the dependencies
-var pkg = require('package.json');
+var pkg = require('./package.json');
 var deps = _.keys(pkg.dependencies).concat(_.keys(pkg.devDependencies));
 var middleware = require('matched')(deps, ['assemble-middleware-*']);
 var helpers = require('matched')(deps, ['handlebars-helper-*']);
@@ -76,6 +76,7 @@ assemble(options).build(function(err, results) {
     console.log('Error', err);
     return done(err);
   }
+
   var pageKeys = _.keys(results.pages);
   pageKeys.forEach(function (pageKey) {
     var page = results.pages[pageKey];
