@@ -1,27 +1,67 @@
-layout: "post"
-layoutext: ".hbs"
-layoutdir: "templates/layouts/"
-assets: "assets"
-ext: ".html"
-partials:
-  - "templates/includes/**/*.hbs"
+# =============================================
+# ASSEMBLE CONFIG
+# =============================================
+
+dest:            _gh_pages
+assets:          assets
+ext:             .html
+
+
+# =============================================
+# Data
+# =============================================
+
+# Metadata
+data:
+- {name: 'site', src: ['.assemblerc.yml']} # This is magic :-) it adds data in this file to the `site` object
+- data/*.json
+
+
+# =============================================
+# Templates
+# =============================================
+
+# Includes
+partials:          templates/includes/**/*.hbs
+
+# Layouts
+layout:            post                  # the default layout to use
+layoutdir:         templates/layouts     # directory with layouts
+layoutext:         .hbs                  # the extension used by layouts
+
+
+# =============================================
+# EXTENSIONS
+# =============================================
+
+middleware:  ['examples/**/*.js']
+
+
+# =============================================
+# BLOG SETTINGS
+# =============================================
+
 blog:
-  posts:
-    - "**/*.md"
-  dest: "blog/"
-  cwd: "templates/posts/"
-  expand: true
-  flatten: false
-  structure: ":basename/index.html"
+  flatten:         false
+  cwd:             templates/posts
+  posts:           '**/*.md'
+
+  dest:            blog
+  structure:       ':basename/index.html'
+
+  # Archives collections
   archives:
-    name: "archive"
-    plural: "archives"
+    name:          archive
+    plural:        archives
+
     related_pages:
-      template: "templates/layouts/list.hbs"
-      dest: "<%= blog.dest %>archives/"
+      template:    templates/layouts/list.hbs
+      dest:        <%= site.blog.dest %>archives
+
       pagination:
-        prop: "num"
-        limit: 2
-        sortby: "date"
+        prop:      num
+        limit:     2
+        sortby:    date
+
       permalinks:
-        structure: ":archive/:numindex.html"
+        structure: ':archive/:numindex.html'
