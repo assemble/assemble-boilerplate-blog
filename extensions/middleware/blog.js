@@ -15,6 +15,7 @@ module.exports = function (assemble) {
 
   // using the specified folders, load posts as pages
   var loadPosts = function (params, done) {
+    console.log(params)
     assemble.log.debug('\t[plugin]: ', 'assemble-blog-load-posts plugin', params.event);
     assemble.log.debug('\t[params]:', params);
 

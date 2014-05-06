@@ -34,7 +34,7 @@ layoutext:         .hbs                  # the extension used by layouts
 # EXTENSIONS
 # =============================================
 
-middleware:  ['examples/**/*.js']
+# middleware:  ["extensions/middleware/*.js"]
 
 
 # =============================================
@@ -43,11 +43,11 @@ middleware:  ['examples/**/*.js']
 
 blog:
   flatten:         false
-  cwd:             templates/posts
+  cwd:             content/posts
   posts:           '**/*.md'
 
-  dest:            blog
-  structure:       ':basename/index.html'
+  dest:            blog/
+  structure:       ":basename/index.html"
 
   # Archives collections
   archives:
@@ -56,7 +56,7 @@ blog:
 
     related_pages:
       template:    templates/layouts/list.hbs
-      dest:        <%= site.blog.dest %>archives
+      dest:        <%= blog.dest %>/archives
 
       pagination:
         prop:      num
@@ -64,4 +64,4 @@ blog:
         sortby:    date
 
       permalinks:
-        structure: ':archive/:numindex.html'
+        structure: ":archive/:numindex.html"

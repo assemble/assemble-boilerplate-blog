@@ -21,13 +21,18 @@
     }
   ],
   "keywords": [
-    "docs",
-    "documentation",
-    "generate",
-    "generator",
-    "markdown",
-    "templates",
-    "verb"
+    "archives",
+    "assemble",
+    "assembleboilerplate",
+    "assemblemiddleware",
+    "blog",
+    "boilerplate",
+    "middleware",
+    "pager",
+    "paginate",
+    "pagination",
+    "post",
+    "posts"
   ],
   "main": "index.js",
   "engines": {
@@ -37,22 +42,20 @@
     "test": "mocha -R spec"
   },
   "devDependencies": {
-    "verb": "~0.2.0",
-    "chai": "^1.9.1",
     "assemble": "git://github.com/assemble/assemble#v0.5.0",
-    "lodash": "^2.4.1",
-    "fs-utils": "^0.4.1",
-    "matched": "^0.1.1",
-    "gulp": "^3.6.2",
-    "gulp-assemble": "^0.1.5"
-  },
-  "dependencies": {
-    "fs-utils": "^0.4.0",
-    "strings": "^0.2.1",
     "assemble-middleware-permalinks": "^0.5.0",
-    "normalize-config": "^0.2.1",
-    "resolve": "~0.6.3",
+    "fs-utils": "^0.4.1",
+    "gulp": "^3.6.2",
+    "gulp-assemble": "git://github.com/assemble/gulp-assemble",
+    "gulp-clean": "^0.2.4",
+    "gulp-jshint": "^1.5.5",
+    "gulp-mocha": "^0.4.1",
+    "gulp-verb": "^0.2.3",
+    "handlebars-helper-moment": "^0.2.0",
+    "lodash": "^2.4.1",
+    "matched": "^0.1.1",
     "relative": "^0.1.4",
-    "handlebars-helper-moment": "^0.2.0"
+    "resolve": "^0.6.3",
+    "strings": "^0.2.1"
   }
 }

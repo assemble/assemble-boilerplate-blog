@@ -6,12 +6,12 @@
  */
 
 // load middleware from the dependencies
-var loadExtensions = require('./extensions/middleware/lib/load');
+var loadExtensions = require('./middleware/lib/load');
 var middleware = loadExtensions('assemble-middleware-*');
 var helpers = loadExtensions('handlebars-helper-*');
 
 // setup the configuration options to pass to assemble
-var options = {
+module.exports = {
   assemblerc: '.assemblerc.yml',
   middleware: middleware.concat(['./extensions/middleware/*.js']),
   helpers: helpers.concat(['./extensions/helpers/*.js']),
