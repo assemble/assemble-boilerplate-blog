@@ -46,22 +46,13 @@ blog:
   cwd:             content/posts
   posts:           '**/*.md'
 
+  # Dest directory and structure
   dest:            blog/
   structure:       ":basename/index.html"
 
-  # Archives collections
-  archives:
-    name:          archive
-    plural:        archives
+# =============================================
+# URL
+# =============================================
 
-    related_pages:
-      template:    templates/layouts/list.hbs
-      dest:        <%= blog.dest %>/archives
-
-      pagination:
-        prop:      num
-        limit:     2
-        sortby:    date
-
-      permalinks:
-        structure: ":archive/:numindex.html"
+url:
+  homepage:  http://assemble.io

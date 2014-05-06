@@ -1,12 +1,13 @@
 'use strict';
 
+require('coffee-script/register');
 var gulp = require('gulp');
 
 var assemble = require('gulp-assemble');
 var clean = require('gulp-clean');
 var jshint = require('gulp-jshint');
-var mocha = require('gulp-mocha');
-var options = require('./extensions/config.js');
+// var mocha = require('gulp-mocha');
+var options = require('./extensions/config');
 
 
 gulp.task('assemble', function () {
@@ -26,9 +27,9 @@ gulp.task('clean', function () {
     .pipe(clean());
 });
 
-gulp.task('test', function () {
-  gulp.src(['test/test.js'])
-    .pipe(mocha({reporter: 'spec'}));
-});
+// gulp.task('test', function () {
+//   gulp.src(['test/test.js'])
+//     .pipe(mocha({reporter: 'spec'}));
+// });
 
 gulp.task('default', ['assemble', 'clean', 'lint', 'test']);

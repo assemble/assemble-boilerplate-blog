@@ -15,26 +15,10 @@ module.exports = function (assemble) {
 
   // using the specified folders, load posts as pages
   var loadPosts = function (params, done) {
-    console.log(params)
     assemble.log.debug('\t[plugin]: ', 'assemble-blog-load-posts plugin', params.event);
     assemble.log.debug('\t[params]:', params);
 
     if (assemble.config.blog) {
-
-      // make sure collections options are there
-      assemble.config.collections = assemble.config.collections || [];
-      var archivesCollection = null;
-      for (var i = 0; i < assemble.config.collections.length; i++) {
-        if (assemble.config.collections[i].name && assemble.config.collections[i].name === 'archive') {
-          archivesCollection = assemble.collections[i];
-        }
-      }
-
-      if (archivesCollection === null) {
-        archivesCollection = assemble.config.blog.archives;
-        assemble.config.collections.push(archivesCollection);
-      }
-
       assemble.config.pages = assemble.config.pages || [];
 
       // load posts

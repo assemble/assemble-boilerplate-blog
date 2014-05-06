@@ -57,5 +57,8 @@
     "relative": "^0.1.4",
     "resolve": "^0.6.3",
     "strings": "^0.2.1"
+  },
+  "dependencies": {
+    "coffee-script": "^1.7.1"
   }
 }
