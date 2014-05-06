@@ -5,11 +5,8 @@
  * Licensed under the MIT License (MIT).
  */
 
-var path = require('path');
-
 var _ = require('lodash');
-var file = require('fs-utils');
-var expect = require('chai').expect;
+// var file = require('fs-utils');
 var assemble = require('assemble');
 
 describe('assemble-middleware-blog', function () {
@@ -18,6 +15,7 @@ describe('assemble-middleware-blog', function () {
     var pkg = require('../package.json');
     var deps = _.keys(pkg.dependencies).concat(_.keys(pkg.devDependencies));
     var middleware = require('matched')(deps, ['assemble-middleware-*']);
+
     var options = {
       assemblerc: 'test/fixtures/.assemblerc.yml',
       middleware: middleware.concat(['templates/_middleware/blog.js']),
