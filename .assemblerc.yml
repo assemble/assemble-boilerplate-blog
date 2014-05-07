@@ -1,11 +1,13 @@
 # =============================================
-# ASSEMBLE CONFIG
+# DEST CONFIG
 # =============================================
 
-dest:            _gh_pages
-assets:          assets
-ext:             .html
+base:         _gh_pages
+dest:         _gh_pages
+ext:          .html
 
+# Dest assets
+public:       <%= site.dest %>/public
 
 # =============================================
 # Data
@@ -13,28 +15,56 @@ ext:             .html
 
 # Metadata
 data:
-- {name: 'site', src: ['.assemblerc.yml']} # This is magic :-) it adds data in this file to the `site` object
+# - {name: 'site', src: ['.assemblerc.yml']} # This is magic :-) it adds data in this file to the `site` object
+# - {name: 'pkg',  src: ['package.json']}
 - data/*.json
+
+date:         <%= new Date() %>
+
+description:  <%= pkg.description %>
 
 
 # =============================================
 # Templates
 # =============================================
 
-# Includes
-partials:          templates/includes/**/*.hbs
+# Assets > fonts, icons, images etc.
+assets:       <%= site.dest %>/public
+images:       <%= site.assets %>/images
+fonts:        <%= site.assets %>/fonts
 
-# Layouts
-layout:            post                  # the default layout to use
-layoutdir:         templates/layouts     # directory with layouts
-layoutext:         .hbs                  # the extension used by layouts
+# Styles
+styles:       styles
+
+# Scripts
+scripts:      scripts
+
+# Content
+# content:      content
+
+
+# =============================================
+# TEMPLATES
+# =============================================
+
+templates:    templates
+
+# partials
+# components:   templates/components
+includes:     templates/includes
+snippets:     templates/snippets
+
+# layouts
+layouts:      templates/layouts
+layoutext:    .hbs
+layout:       post
 
 
 # =============================================
 # EXTENSIONS
 # =============================================
 
-# middleware:  ["extensions/middleware/*.js"]
+# middleware: ["extensions/middleware/*.js"]
 
 
 # =============================================
@@ -42,17 +72,17 @@ layoutext:         .hbs                  # the extension used by layouts
 # =============================================
 
 blog:
-  flatten:         false
-  cwd:             content/posts
-  posts:           '**/*.md'
+  flatten:    false
+  cwd:        content/posts
+  posts:      '**/*.md'
 
   # Dest directory and structure
-  dest:            blog/
-  structure:       ":basename/index.html"
+  dest:       blog/
+  structure:  ":basename/index.html"
 
 # =============================================
 # URL
 # =============================================
 
 url:
-  homepage:  http://assemble.io
+  homepage:   http://assemble.io

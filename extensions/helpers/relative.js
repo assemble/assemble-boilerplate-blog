@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2014 Jon Schlinkert
+ * Licensed under the MIT License (MIT).
+ */
 
 var relative = require('relative');
 

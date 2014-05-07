@@ -25,22 +25,20 @@ module.exports = function (assemble) {
       var posts = file.expandMapping(assemble.config.blog.posts, assemble.config.blog);
       //var parser = strings.parser(':year/:month/:day-:basename.:ext');
 
-      var parser = {
-        parse: function (filepath) {
-          // {YYYY}/{MM}/{DD}-{basename}{ext}
-          var re = /(\d{4})\/(\d{2})\/(\d{2})-(.*)(\..*)$/;
-          var matches = filepath.match(re);
-          var results = {};
-          if (matches) {
-            results.year = matches[1];
-            results.month = matches[2];
-            results.day = matches[3];
-            results.basename = matches[4];
-            results.ext = matches[5];
-            results.date = new Date(results.year, (results.month - 1), results.day);
-          }
-          return results;
+      var parseFilepath =  function (filepath) {
+        // {YYYY}/{MM}/{DD}-{basename}{ext}
+        var re = /(\d{4})\/(\d{2})\/(\d{2})-(.*)(\..*)$/;
+        var matches = filepath.match(re);
+        var results = {};
+        if (matches) {
+          results.year = matches[1];
+          results.month = matches[2];
+          results.day = matches[3];
+          results.basename = matches[4];
+          results.ext = matches[5];
+          results.date = new Date(results.year, (results.month - 1), results.day);
         }
+        return results;
       };
 
       posts.forEach(function (fp) {
@@ -49,7 +47,7 @@ module.exports = function (assemble) {
           post.src = post.data.src = filepath;
           post.dest = assemble.utils.utils.generateDestination(post.src, (assemble.config.blog.dest + fp.dest), false, assemble.config);
 
-          var ctx = parser.parse(filepath);
+          var ctx = parseFilepath(filepath);
           var yearStructure = new Strings({structure: ':YYYY'});
           var monthStructure = new Strings({structure: ':YYYY-:MM'});
           var dayStructure = new Strings({structure: ':YYYY-:MM-:DD'});

@@ -1,8 +1,8 @@
 ---
-title: May The Fourth
+title: Baz
 excerpt: Foo bar baz
 
 posts:
-- recent
+- programming
 ---
 > It's Star Wars Day!!!

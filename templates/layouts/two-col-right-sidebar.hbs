@@ -1,0 +1,19 @@
+---
+layout: base
+---
+<div class="blog-header">
+  <h1 class="blog-title">{{site.title}}</h1>
+  <p class="lead blog-description">{{site.description}}</p>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-8 blog-main">
+    {{ body }}
+  </div><!-- /.blog-main -->
+
+
+  <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+    {{> sidebar }}
+  </div><!-- /.blog-sidebar -->
+</div><!-- /.row -->

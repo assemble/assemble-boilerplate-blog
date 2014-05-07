@@ -1,11 +1,43 @@
 ---
-layout: default
+layout: two-col-right-sidebar
 title: home
 slug: home
+
+paginate: false
 ---
 
 <div class="docs-section">
   <div class="page-header">
     <h1 id="home">{{title}}</h1>
   </div>
+</div>
+
+
+
+<div class="docs-section">
+  <div class="page-header">
+    <h1 id="home-recent-posts">Recent posts</h1>
+  </div>
+  {{#each collections.posts}}
+    {{#is post 'recent'}}
+      {{#each pages}}
+        {{> excerpt .}}
+      {{/each}}
+    {{/is}}
+  {{/each}}
+</div>
+
+
+
+<div class="docs-section">
+  <div class="page-header">
+    <h1 id="home-programming-posts">Programming posts</h1>
+  </div>
+  {{#each collections.posts}}
+    {{#is post 'programming'}}
+      {{#each pages}}
+        {{> excerpt .}}
+      {{/each}}
+    {{/is}}
+  {{/each}}
 </div>

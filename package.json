@@ -44,7 +44,11 @@
   "devDependencies": {
     "assemble": "git://github.com/assemble/assemble#v0.5.0",
     "assemble-middleware-permalinks": "^0.5.0",
+    "assemble-middleware-wordcount": "^0.4.4",
     "fs-utils": "^0.4.1",
+    "grunt": "^0.4.4",
+    "grunt-assemble": "^0.1.13",
+    "grunt-assemble-less": "^0.8.1",
     "gulp": "^3.6.2",
     "gulp-assemble": "git://github.com/assemble/gulp-assemble",
     "gulp-clean": "^0.2.4",
@@ -52,6 +56,7 @@
     "gulp-mocha": "^0.4.1",
     "gulp-verb": "^0.2.3",
     "handlebars-helper-moment": "^0.2.0",
+    "handlebars-helper-rel": "^0.2.0",
     "lodash": "^2.4.1",
     "matched": "^0.1.1",
     "relative": "^0.1.4",
@@ -59,6 +64,7 @@
     "strings": "^0.2.1"
   },
   "dependencies": {
-    "coffee-script": "^1.7.1"
+    "coffee-script": "^1.7.1",
+    "resolve-dep": "^0.3.2"
   }
 }

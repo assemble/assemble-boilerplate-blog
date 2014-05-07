@@ -1,9 +1,20 @@
 ---
-layout: default
+layout: two-col-right-sidebar
 ---
 <div class="blog-post">
-  {{> post-head}}
-  {{#markdown}}
-    {{ body }}
-  {{/markdown}}
+  {{> paginator this.pager }}
+
+  {{> post-head }}
+
+  <p class="blog-post-content wordcount">
+    <p class="blog-post-meta">
+      {{> wordcount }}
+    </p>
+
+    {{#markdown}}
+      {{ body }}
+    {{/markdown}}
+  </p>
+
+  {{> paginator this.pager }}
 </div>

@@ -11,9 +11,13 @@ var options = require('./extensions/config');
 
 
 gulp.task('assemble', function () {
-  gulp.src('templates/pages/**/*.hbs')
+  gulp.src('templates/pages/*.hbs')
     .pipe(assemble(options))
     .pipe(gulp.dest('_gh_pages/'));
+
+  gulp.src('content/posts/**/*.md')
+    .pipe(assemble(options))
+    .pipe(gulp.dest('_gh_pages/blog/'));
 });
 
 gulp.task('lint', function () {
@@ -32,4 +36,4 @@ gulp.task('clean', function () {
 //     .pipe(mocha({reporter: 'spec'}));
 // });
 
-gulp.task('default', ['assemble', 'clean', 'lint', 'test']);
+gulp.task('default', ['assemble', 'clean', 'lint']);

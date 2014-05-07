@@ -1,11 +1,22 @@
-  <div class="blog-masthead">
-    <div class="container">
-      <nav class="blog-nav">
-        <a class="blog-nav-item active" href="#">Home</a>
-        <a class="blog-nav-item" href="#">New features</a>
-        <a class="blog-nav-item" href="#">Press</a>
-        <a class="blog-nav-item" href="#">New hires</a>
-        <a class="blog-nav-item" href="#">About</a>
-      </nav>
+<header class="navbar navbar-fixed-top bs-docs-nav" id="top" role="banner">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="{{rel 'home.html'}}" class="navbar-brand">Home</a>
     </div>
+    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav navbar-right">
+        <li{{#is slug "about"}} class="active"{{/is}}>
+          <a href="{{rel 'about.html'}}">About</a>
+        </li>
+        <li><a href="{{ site.blog }}">Blog</a></li>
+        <li><a href="{{ site.expo }}">GitHub</a></li>
+      </ul>
+    </nav>
   </div>
+</header>

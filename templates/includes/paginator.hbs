@@ -1,0 +1,19 @@
+{{#is @root.page.index 1}}
+  <ul class="pager {{modifier}}">
+    <li class="pager-heading">POPULAR</li>
+    <li class="previous"><a href="{{relative @root.page.dest prev.dest}}">&larr; Previous</a></li>
+    <li class="next"><a href="{{relative @root.page.dest next.dest}}">Next &rarr;</a></li>
+  </ul>
+{{else}}
+  {{#is currentPage totalPages}}
+    <ul class="pager {{modifier}}">
+      <li class="previous"><a href="{{relative @root.page.dest prev.dest}}">&larr; Previous</a></li>
+      <li class="next disabled"><a href="{{relative @root.page.dest next.dest}}">Next &rarr;</a></li>
+    </ul>
+  {{else}}
+    <ul class="pager {{modifier}}">
+      <li class="previous"><a href="{{relative @root.page.dest prev.dest}}">&larr; Previous</a></li>
+      <li class="next"><a href="{{relative @root.page.dest next.dest}}">Next &rarr;</a></li>
+    </ul>
+  {{/is}}
+{{/is}}

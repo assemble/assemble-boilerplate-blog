@@ -1,9 +1,9 @@
 ---
-title: "Kentucky Derby Day!!!"
+title: Bar
 excerpt: Foo bar baz
 
 posts:
-- recent
+- programming
 ---
 
 > The bourbon tradition
