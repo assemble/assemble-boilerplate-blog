@@ -29,9 +29,9 @@ module.exports = [
         limit: 2
         sortby: "date"
 
-      dest: "<%= blog.dest %>/archives"
+      dest: "<%= site.blog.dest %>/archives"
       permalinks:
-        structure: ":archive/page-:numindex.html"
+        structure: ":archive/:numindex.html"
         replacements: [
           {
             pattern: ":archive"
@@ -42,7 +42,7 @@ module.exports = [
             pattern: ":num"
             replacement: ->
               return ""  if @num is 1
-              @num + "/"
+              "page-" + @num + "/"
           }
         ]
   }

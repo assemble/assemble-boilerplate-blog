@@ -64,7 +64,8 @@ layout:       post
 # EXTENSIONS
 # =============================================
 
-# middleware: ["extensions/middleware/*.js"]
+helpers: "extensions/helpers"
+middleware: "extensions/middleware"
 
 
 # =============================================
@@ -77,7 +78,7 @@ blog:
   posts:      '**/*.md'
 
   # Dest directory and structure
-  dest:       blog/
+  dest:       "<%= site.dest %>/blog"
   structure:  ":basename/index.html"
 
 # =============================================

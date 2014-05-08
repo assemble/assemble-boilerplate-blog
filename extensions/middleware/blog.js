@@ -5,6 +5,7 @@
  * Licensed under the MIT License (MIT).
  */
 
+var path = require('path');
 var file = require('fs-utils');
 var strings = require('strings');
 var Strings = require('strings/lib/strings');
@@ -45,7 +46,7 @@ module.exports = function (assemble) {
         fp.src.forEach(function (filepath) {
           var post = assemble.utils.component.fromFile(filepath, 'component');
           post.src = post.data.src = filepath;
-          post.dest = assemble.utils.utils.generateDestination(post.src, (assemble.config.blog.dest + fp.dest), false, assemble.config);
+          post.dest = assemble.utils.utils.generateDestination(post.src, path.join(assemble.config.blog.dest, fp.dest), false, assemble.config);
 
           var ctx = parseFilepath(filepath);
           var yearStructure = new Strings({structure: ':YYYY'});
