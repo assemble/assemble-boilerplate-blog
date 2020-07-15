@@ -57,7 +57,7 @@
     "gulp-verb": "^0.2.3",
     "handlebars-helper-moment": "^0.2.0",
     "handlebars-helper-rel": "^0.2.0",
-    "lodash": "^2.4.1",
+    "lodash": "^4.17.19",
     "matched": "^0.1.1",
     "relative": "^0.1.4",
     "resolve": "^0.6.3",
